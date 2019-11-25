@@ -6,34 +6,37 @@
 - name: "Include install-{{ ansible_os_family }}.yml"
   include: "install-{{ ansible_os_family }}.yml"
 
-- name: "Create {{ template_role_config_dir }}"
+- name: "Create {{ blackbox_exporter_config_dir }}"
   file:
-    path: "{{ template_role_config_dir }}"
+    path: "{{ blackbox_exporter_config_dir }}"
     state: directory
 
-- name: "Create {{ template_role_config_file }}"
+- name: "Create {{ blackbox_exporter_config_file }}"
   template:
-    src: template_role.conf.j2
-    dest: "{{ template_role_config_file }}"
+    src: blackbox_exporter.yml.j2
+    dest: "{{ blackbox_exporter_config_file }}"
   notify:
-    - Restart template_role_service
+    - Restart blackbox_exporter_service
 
-- name: "Add template_role_user to template_role_extra_groups"
+- name: "Add blackbox_exporter_user to blackbox_exporter_extra_groups"
   user:
-    name: "{{ template_role_user }}"
+    name: "{{ blackbox_exporter_user }}"
     append: yes
     create_home: no
-    groups: "{{ template_role_extra_groups }}"
+    groups: "{{ blackbox_exporter_extra_groups }}"
 
-- name: Create template_role_log_dir
+- name: Create blackbox_exporter_log_dir
   file:
-    path: "{{ template_role_log_dir }}"
-    owner: "{{ template_role_user }}"
-    group: "{{ template_role_group }}"
+    path: "{{ blackbox_exporter_log_dir }}"
+    owner: "{{ blackbox_exporter_user }}"
+    group: "{{ blackbox_exporter_group }}"
     mode: 0755
     state: directory
+  when:
+    # XXX ubuntu package does not log to a file, but to /var/log/syslog
+    - ansible_os_family != 'Debian'
 
-- name: Start template_role_service
+- name: Start blackbox_exporter_service
   service:
-    name: "{{ template_role_service }}"
+    name: "{{ blackbox_exporter_service }}"
     state: started

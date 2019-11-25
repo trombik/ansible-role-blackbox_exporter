@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/trombik/kitchen-sync.git
+  revision: d1d14052e3f401d87986eaffdf5d117518c8bd68
+  branch: without_full_path_to_rsync
+  specs:
+    kitchen-sync (2.1.2.pre)
+      net-sftp
+      test-kitchen (>= 1.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -15,9 +24,6 @@ GEM
     kitchen-ansible (0.50.1)
       net-ssh (>= 3)
       test-kitchen (>= 1.4)
-    kitchen-sync (2.2.1)
-      net-sftp
-      test-kitchen (>= 1.0.0)
     kitchen-vagrant (1.6.0)
       test-kitchen (>= 1.4, < 3)
     kitchen-verifier-serverspec (0.7.0)
@@ -160,7 +166,7 @@ PLATFORMS
 
 DEPENDENCIES
   kitchen-ansible
-  kitchen-sync
+  kitchen-sync (~> 2.1.1)!
   kitchen-vagrant
   kitchen-verifier-serverspec
   kitchen-verifier-shell

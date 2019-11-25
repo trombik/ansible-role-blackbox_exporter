@@ -1,13 +1,13 @@
 ---
 
-template_role_package: "{{ __template_role_package }}"
-template_role_service: "{{ __template_role_service }}"
-template_role_extra_packages: []
-template_role_user: "{{ __template_role_user }}"
-template_role_group: "{{ __template_role_group }}"
-template_role_extra_groups: []
-template_role_log_dir: /var/log/template_role
-template_role_config_dir: "{{ __template_role_config_dir }}"
-template_role_config_file: "{{ template_role_config_dir }}/sshd_config"
-template_role_config: ""
-template_role_flags: ""
+blackbox_exporter_package: "{{ __blackbox_exporter_package }}"
+blackbox_exporter_service: "{{ __blackbox_exporter_service }}"
+blackbox_exporter_extra_packages: []
+blackbox_exporter_user: "{{ __blackbox_exporter_user }}"
+blackbox_exporter_group: "{{ __blackbox_exporter_group }}"
+blackbox_exporter_extra_groups: []
+blackbox_exporter_log_dir: "{{ __blackbox_exporter_log_dir }}"
+blackbox_exporter_config_dir: "{{ __blackbox_exporter_config_dir }}"
+blackbox_exporter_config_file: "{{ blackbox_exporter_config_dir }}/blackbox_exporter.yml"
+blackbox_exporter_config: ""
+blackbox_exporter_flags: ""

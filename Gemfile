@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "kitchen-ansible"
-gem "kitchen-sync"
+gem "kitchen-sync", "~> 2.1.1", git: "https://github.com/trombik/kitchen-sync.git", branch: "without_full_path_to_rsync"
 gem "kitchen-vagrant"
 gem "kitchen-verifier-serverspec"
 gem "kitchen-verifier-shell"

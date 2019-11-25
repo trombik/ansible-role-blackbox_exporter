@@ -21,17 +21,6 @@ platforms:
       - name: shared
         aliases: server1
 
-  - name: client1
-    hostname: client1
-    image: geerlingguy/docker-ubuntu1804-ansible
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
-    pre_build_image: true
-    networks:
-      - name: shared
-        aliases: client1
-
 provisioner:
   name: ansible
   # XXX this controls `no-log` in auto-generated playbooks by the docker

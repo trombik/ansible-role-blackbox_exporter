@@ -52,26 +52,6 @@ passed to `rcctl set template_role`.
 | `__template_role_user` | `sshd` |
 | `__template_role_group` | `sshd` |
 
-## OpenBSD
-
-| Variable | Default |
-|----------|---------|
-| `__template_role_service` | `sshd` |
-| `__template_role_package` | `""` |
-| `__template_role_config_dir` | `/etc/ssh` |
-| `__template_role_user` | `sshd` |
-| `__template_role_group` | `sshd` |
-
-## RedHat
-
-| Variable | Default |
-|----------|---------|
-| `__template_role_service` | `sshd` |
-| `__template_role_package` | `openssh-server` |
-| `__template_role_config_dir` | `/etc/ssh` |
-| `__template_role_user` | `sshd` |
-| `__template_role_group` | `sshd` |
-
 # Dependencies
 
 # Example Playbook

@@ -1,6 +1,7 @@
 ---
-__template_role_service: ssh
-__template_role_package: openssh-server
-__template_role_config_dir: /etc/ssh
-__template_role_user: sshd
-__template_role_group: nogroup
+__blackbox_exporter_service: prometheus-blackbox-exporter
+__blackbox_exporter_package: prometheus-blackbox-exporter
+__blackbox_exporter_config_dir: /etc/blackbox
+__blackbox_exporter_user: prometheus
+__blackbox_exporter_group: prometheus
+__blackbox_exporter_log_dir: /var/log/prometheus

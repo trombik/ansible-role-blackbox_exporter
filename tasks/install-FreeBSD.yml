@@ -1,25 +1,25 @@
 ---
 
-- name: Install template_role_extra_packages
+- name: Install blackbox_exporter_extra_packages
   pkgng:
-    name: "{{ template_role_extra_packages }}"
+    name: "{{ blackbox_exporter_extra_packages }}"
     state: present
 
-- name: Install template_role_package
+- name: Install blackbox_exporter_package
   pkgng:
-    name: "{{ template_role_package }}"
+    name: "{{ blackbox_exporter_package }}"
     state: present
 
-- name: Enable template_role_service
+- name: Enable blackbox_exporter_service
   service:
-    name: "{{ template_role_service }}"
+    name: "{{ blackbox_exporter_service }}"
     enabled: yes
 
-- name: "Create /etc/rc.conf.d/{{ template_role_service }}"
+- name: "Create /etc/rc.conf.d/{{ blackbox_exporter_service }}"
   template:
     src: FreeBSD.rcd.j2
-    dest: "/etc/rc.conf.d/{{ template_role_service }}"
+    dest: "/etc/rc.conf.d/{{ blackbox_exporter_service }}"
     mode: 0644
     validate: sh -n %s
   notify:
-    - Restart template_role_service
+    - Restart blackbox_exporter_service

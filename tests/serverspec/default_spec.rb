@@ -1,24 +1,18 @@
 require "spec_helper"
 require "serverspec"
 
-package = "openssh-portable"
-service = "openssh"
-config_dir = "/etc/ssh"
+package = "blackbox_exporter"
+service = "blackbox_exporter"
+config_dir = "/etc/blackbox_exporter"
 config_mode = 644
-user = "sshd"
-group = "sshd"
-log_dir = "/var/log"
-log_file = "#{log_dir}/messages"
+user = "prometheus"
+group = "prometheus"
+log_dir = "/var/log/blackbox_exporter"
 default_user = "root"
 default_group = "wheel"
-log_owner = default_user
-log_group = default_group
-log_mode = 644
-log_dir_owner = default_user
-log_dir_group = default_group
+log_mode = 640
 log_dir_mode = 755
-log_mode = 644
-ports = []
+ports = [9115]
 extra_groups = %w[]
 extra_packages = []
 
@@ -28,21 +22,24 @@ when "openbsd"
   package = nil
   ports = [22, 10_022]
 when "freebsd"
-  config_dir = "/usr/local/etc/ssh"
-  ports = [22, 10_022]
+  config_dir = "/usr/local/etc"
 when "ubuntu"
-  service = "ssh"
-  group = "nogroup"
+  service = "prometheus-blackbox-exporter"
+  user = "prometheus"
+  group = "prometheus"
+  config_dir = "/etc/blackbox"
   default_group = "root"
-  package = "openssh-server"
-  ports = [22, 10_022]
-  log_file = "#{log_dir}/syslog"
-  log_owner = "syslog"
-  log_group = "adm"
+  package = "prometheus-blackbox-exporter"
+
+  # XXX note that log_dir and log_file are not tested. see reasons for pending
+  # below
+  log_dir = "/var/log/prometheus"
+  log_owner = user
+  log_group = group
   log_mode = 640
-  log_dir_owner = default_user
-  log_dir_group = "syslog"
-  log_dir_mode = 775
+  log_dir_owner = user
+  log_dir_group = group
+  log_dir_mode = 755
 when "redhat"
   ports = [22]
   default_group = "root"
@@ -57,7 +54,12 @@ when "redhat"
   log_dir_mode = 755
 end
 
-config = "#{config_dir}/sshd_config"
+config = "#{config_dir}/blackbox_exporter.yml"
+log_owner = user
+log_group = group
+log_dir_owner = user
+log_dir_group = group
+log_file = "#{log_dir}/blackbox_exporter.log"
 
 if os[:family] != "openbsd"
   describe package(package) do
@@ -93,11 +95,10 @@ describe file(config) do
   it { should be_owned_by default_user }
   it { should be_grouped_into default_group }
   its(:content) { should match(/Managed by ansible/) }
-  its(:content) { should match(/UseDNS no/) }
-  its(:content) { should match(/Port \d+/) }
 end
 
 describe file(log_dir) do
+  before { skip "the systemd unit file in ubuntu package does not handle logging to a file" if os[:family] == "ubuntu" }
   it { should be_directory }
   it { should be_mode log_dir_mode }
   it { should be_owned_by log_dir_owner }
@@ -158,6 +159,7 @@ ports.each do |p|
 end
 
 describe file(log_file) do
+  before { skip "the systemd unit file in ubuntu package does not handle logging to a file" if os[:family] == "ubuntu" }
   it { should be_file }
   it { should be_owned_by log_owner }
   it { should be_grouped_into log_group }

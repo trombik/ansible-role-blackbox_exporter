@@ -1,6 +1,6 @@
 ---
 
-- name: Restart template_role_service
+- name: Restart blackbox_exporter_service
   service:
-    name: "{{ template_role_service }}"
+    name: "{{ blackbox_exporter_service }}"
     state: restarted
