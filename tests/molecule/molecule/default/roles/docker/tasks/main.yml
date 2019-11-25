@@ -47,3 +47,10 @@
   when:
     - ansible_os_family != 'FreeBSD'
     - ansible_os_family != 'OpenBSD'
+
+- name: Install daemon
+  apt:
+    name: daemon
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
