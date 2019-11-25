@@ -37,7 +37,7 @@
         blackbox_exporter_listen_address={{ ansible_em1['ipv4'][0]['address'] | default('') }}:9115
         blackbox_exporter_log_file={{ blackbox_exporter_log_dir }}/blackbox_exporter.log
       Debian: |
-        ARGS="--config.file=/etc/prometheus/blackbox.yml --web.listen-address={{ ansible_eth1['ipv4']['address'] | default('') }}:9115
+        ARGS="--config.file=/etc/prometheus/blackbox.yml --web.listen-address={{ ansible_eth1['ipv4']['address'] | default('') }}:9115"
     blackbox_exporter_flags: "{{ os_blackbox_exporter_flags[ansible_os_family] }}"
 
     # https://github.com/prometheus/blackbox_exporter/blob/master/example.yml
